@@ -34,7 +34,8 @@ body{
     width: 80%;
     align-self: center;
 }
-.button{
+.button,
+.clear {
     height: 3.5rem;
     width: 3.5rem;
     font-size: 2rem;

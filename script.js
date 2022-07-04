@@ -26,15 +26,30 @@ function operate(operator , num1 , num2){
     else if (operator == "multiplication") return multiply(num1 , num2)
     else if (operator == "division") return division(num1 , num2)
 }
+function operators(e){
+    if (e.target.textContent == "+") return 'addition'
+    else if (e.target.textContent == "-") return 'subtraction'
+    else if (e.target.textContent == "x") return 'multiplication'
+    else if (e.target.textContent == "/") return 'division'
+}
+
 let a = ''
+let b
 const screen  = document.querySelector('#screen')
-const buttons = document.querySelectorAll('button')
+const buttons = document.querySelectorAll('.button')
 buttons.forEach(button => button.addEventListener('click' , (e)=>{
-    let y = Number(e.target.textContent)
+    let y = e.target.textContent
     if(!isNaN(y)){
     screen.textContent = screen.textContent + y 
     a = `${a}${y}`
     }
+    else{
+        c = operators(e)
+    }
     b = parseInt(a)
-    console.log(typeof b)
 }))
+const clear = document.querySelector('.clear')
+clear.addEventListener('click' , (e)=>{
+    screen.textContent = ''
+    e.stopPropagation()
+})
