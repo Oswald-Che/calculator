@@ -5,8 +5,8 @@ function add(...arg){
     }, 0)
     return sum
 }
-function sub(a , b){
-    const result =  a - b
+function sub(text , firstNum){
+    const result =  text - firstNum
     return result
 }
 function multiply(...arg){
@@ -16,8 +16,8 @@ function multiply(...arg){
     }, 1)
     return result
 }
-function division (a, b){
-   const result = a / b
+function division (text, firstNum){
+   const result = text / firstNum
    return result
 }
 function operate(operator , num1 , num2){
@@ -33,23 +33,38 @@ function operators(e){
     else if (e.target.textContent == "/") return 'division'
 }
 
-let a = ''
-let b
+let text = '', firstNum, secondNum , sign, result
+ 
 const screen  = document.querySelector('#screen')
 const buttons = document.querySelectorAll('.button')
 buttons.forEach(button => button.addEventListener('click' , (e)=>{
+    if(e.target.id == 'operate'){
+       result = operate(sign ,secondNum ,firstNum );
+       console.log(result);
+       screen.textContent = result
+       return
+    }
     let y = e.target.textContent
     if(!isNaN(y)){
     screen.textContent = screen.textContent + y 
-    a = `${a}${y}`
+    text = `${text}${y}`
+    firstNum = parseInt(text)
     }
     else{
-        c = operators(e)
+        secondNum = firstNum
+        if (result) secondNum = result 
+        text = ''
+        firstNum = 0
+        screen.textContent = ''
+        sign = operators(e)
     }
-    b = parseInt(a)
 }))
 const clear = document.querySelector('.clear')
 clear.addEventListener('click' , (e)=>{
     screen.textContent = ''
+    text = ''
+    firstNum = 0
+    secondNum = 0
+    sign = ''
     e.stopPropagation()
 })
