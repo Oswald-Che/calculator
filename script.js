@@ -17,6 +17,12 @@ function multiply(...arg){
     return result
 }
 function division (a, b){
-   result = a / b
-   return results
+   const result = a / b
+   return result
+}
+function operate(operator , num1 , num2){
+    if (operator == "addition") return add(num1 , num2) 
+    else if (operator == "subtraction") return sub(num1 , num2)
+    else if (operator == "multiplication") return multiply(num1 , num2)
+    else if (operator == "division") return division(num1 , num2)
 }
