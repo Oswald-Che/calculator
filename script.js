@@ -33,30 +33,49 @@ function operators(e){
     else if (e.target.textContent == "/") return 'division'
 }
 
-let text = '', firstNum, secondNum , sign, result
+let text = '', firstNum, secondNum , sign, result , d , count
  
 const screen  = document.querySelector('#screen')
 const buttons = document.querySelectorAll('.button')
 buttons.forEach(button => button.addEventListener('click' , (e)=>{
     if(e.target.id == 'operate'){
-       result = operate(sign ,secondNum ,firstNum );
-       console.log(result);
+       result = operate(sign ,d ,firstNum);
+       console.log(result)
        screen.textContent = result
        return
-    }
+     }
     let y = e.target.textContent
     if(!isNaN(y)){
+         if(count){
+           screen.textContent = ''
+            count = undefined
+        }
     screen.textContent = screen.textContent + y 
     text = `${text}${y}`
     firstNum = parseInt(text)
+    // console.log(firstNum)
     }
-    else{
+    else if(y == 'x' || y == '/' || y == '+' || y =='-' ){
         secondNum = firstNum
-        if (result) secondNum = result 
+        // if (result) secondNum = result
+         console.log(secondNum)
         text = ''
         firstNum = 0
+        console.log(sign)
+        if (secondNum && d) {
+            result = operate(sign ,d ,secondNum );
+            console.log(result)
+            count = 1
+            screen.textContent = result
+            d = result 
+            sign = operators(e)
+            return
+        }
+         d = secondNum
         screen.textContent = ''
         sign = operators(e)
+
+        
     }
 }))
 const clear = document.querySelector('.clear')
@@ -66,5 +85,5 @@ clear.addEventListener('click' , (e)=>{
     firstNum = 0
     secondNum = 0
     sign = ''
-    e.stopPropagation()
+    d = undefined
 })
