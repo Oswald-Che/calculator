@@ -33,7 +33,7 @@ function operators(e){
     else if (e.target.textContent == "/") return 'division'
 }
 
-let text = '', firstNum, secondNum , sign, result , carry , count
+let text = '', firstNum, secondNum , sign, result , carry , count , str
  
 const screen  = document.querySelector('#screen')
 const buttons = document.querySelectorAll('.button')
@@ -67,6 +67,16 @@ buttons.forEach(button => button.addEventListener('click' , (e)=>{
             screen.textContent = text
             firstNum = -firstNum
         }
+    }
+    else if( y == 'C'){
+        text = text.slice(0 , (text.length -1) )
+        screen.textContent = text
+        firstNum = Number(text)
+    }
+    else if( y == '%'){
+        firstNum = (firstNum / 100)
+        text = String(firstNum)
+        screen.textContent = text
     }
     else if(y == 'x' || y == '/' || y == '+' || y =='-' ){
         secondNum = firstNum
