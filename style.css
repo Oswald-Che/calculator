@@ -15,7 +15,7 @@ body{
     display: flex;
     flex-direction: column;
     gap : 1.5rem;
-    box-shadow: 1rem 1rem 2rem ;
+    box-shadow: .5rem .5rem 2rem ;
 }
 #screen{
     width: 100%;
@@ -24,12 +24,12 @@ body{
     /* border-top: solid 0.1rem;
     border-bottom: solid 0.1rem; */
     margin-top: 2rem;
-    display: flex;
-    align-items: center;
+    vertical-align: middle;
+    line-height: 8rem;
     align-self: center;
     font-size: 5rem;
-    overflow: hidden;
-    justify-content: flex-end;
+    overflow: hidden; 
+    text-align: right;
 }
 #container{
     display: flex;
@@ -61,4 +61,11 @@ button {
 #operate{
  background-color: blue;
  color: white;
+}
+.transparent{
+    background-color: rgb(91, 151, 179);
+}
+span{
+    height: 100%;
+    width: 100%;
 }

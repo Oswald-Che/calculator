@@ -1,3 +1,6 @@
+function isOverflown(element) {
+    return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
+  }
 function add(...arg){
     const array = Array.from(arg)
     const sum = array.reduce((total , item) =>{
@@ -17,6 +20,10 @@ function multiply(...arg){
     return result
 }
 function division (text, firstNum){
+    if (firstNum == 0) {
+        screen.textContent = 'ERROR!!!'
+        return screen.textContent
+    }
    const result = text / firstNum
    return result
 }
@@ -33,15 +40,19 @@ function operators(e){
     else if (e.target.textContent == "/") return 'division'
 }
 
-let text = '', firstNum, secondNum , sign, result , carry , count , str
+let text = '', firstNum, secondNum , sign, result , carry , count, div , b
  
 const screen  = document.querySelector('#screen')
 const buttons = document.querySelectorAll('.button')
 buttons.forEach(button => button.addEventListener('click' , (e)=>{
     if(e.target.id == 'operate'){
+        if (!sign || !carry || !firstNum) return
        result = operate(sign ,carry ,firstNum);
-       console.log(result)
+    //    console.log(result)
        screen.textContent = result
+       if(isOverflown(screen)){
+        screen.textContent = Number(screen.textContent).toExponential(1)
+       }
        return
      }
     let y = e.target.textContent
@@ -49,11 +60,29 @@ buttons.forEach(button => button.addEventListener('click' , (e)=>{
          if(count){
            screen.textContent = ''
             count = undefined
+            // console.log(div)
+            div.classList.remove('transparent')
         }
-    screen.textContent = screen.textContent + y 
+        if(y == '.' && text.includes('.')) return
+       if(isOverflown(screen)){    
+        let f = Number(screen.textContent)
+        screen.textContent = f.toExponential(1)
+       
+       }
+       else if(!isOverflown(screen)){
+        if(screen.textContent.includes('+')){
+            b = `${Number(screen.textContent)}` + `${y}`
+            console.log(b)
+            b = Number(b) 
+            console.log(b)
+            b = b.toExponential(1)
+            screen.textContent = b
+        }
+        else{
+    screen.textContent = screen.textContent + y}}
     text = `${text}${y}`
     firstNum = Number(text)
-    console.log(firstNum)
+    // console.log(firstNum)
     }
     else if(y == '+/-'){
         if (firstNum > 0) {
@@ -71,31 +100,48 @@ buttons.forEach(button => button.addEventListener('click' , (e)=>{
     else if( y == 'C'){
         text = text.slice(0 , (text.length -1) )
         screen.textContent = text
+        if(isOverflown(screen)){
+            screen.textContent = Number(screen.textContent).toExponential(1)
+           }
         firstNum = Number(text)
     }
     else if( y == '%'){
         firstNum = (firstNum / 100)
         text = String(firstNum)
         screen.textContent = text
+        if(isOverflown(screen)){
+            screen.textContent = Number(screen.textContent).toExponential(1)
+           }
+        d = firstNum
     }
     else if(y == 'x' || y == '/' || y == '+' || y =='-' ){
-        secondNum = firstNum
-        // if (result) secondNum = result
-         console.log(secondNum)
+        if (!firstNum){
+            div.classList.remove('transparent')
+           sign = operators(e)
+            return
+        } secondNum = firstNum
+        //  console.log(secondNum)
         text = ''
-        firstNum = 0
-        console.log(sign)
+        firstNum = undefined
+        // console.log(sign)
         if (secondNum && carry) {
             result = operate(sign ,carry ,secondNum );
-            console.log(result)
-            count = 1
+            // console.log(result)       
             screen.textContent = result
+            if(isOverflown(screen)){
+                screen.textContent = Number(screen.textContent).toExponential(1)
+               }
             carry = result 
             sign = operators(e)
+            e.target.classList.add('transparent')
+            div = e.target
+            count = 1
             return
         }
+        e.target.classList.add('transparent')
+         div = e.target
          carry = secondNum
-        screen.textContent = ''
+         count = 1
         sign = operators(e)
 
         
