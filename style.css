@@ -69,3 +69,12 @@ span{
     height: 100%;
     width: 100%;
 }
+@media (max-width : 396px){
+    #calculator-body{
+        width: 22rem;
+    }
+    button{
+        height: 3rem;
+        width: 3rem;
+    }
+}
