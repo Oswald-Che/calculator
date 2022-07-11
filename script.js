@@ -46,7 +46,7 @@ const screen  = document.querySelector('#screen')
 const buttons = document.querySelectorAll('.button')
 buttons.forEach(button => button.addEventListener('click' , (e)=>{
     if(e.target.id == 'operate'){
-        if (!sign || !carry || !firstNum) return
+        if (!sign || !carry || firstNum == undefined) return
        result = operate(sign ,carry ,firstNum);
     //    console.log(result)
        screen.textContent = result
@@ -88,12 +88,18 @@ buttons.forEach(button => button.addEventListener('click' , (e)=>{
         if (firstNum > 0) {
             text = `-${text}`
             screen.textContent = text
+            if(isOverflown(screen)){
+                screen.textContent = Number(screen.textContent).toExponential(1)
+               }
             firstNum = -firstNum
 
             }
         else if(firstNum < 0){
             text = text.slice(1)
             screen.textContent = text
+            if(isOverflown(screen)){
+                screen.textContent = Number(screen.textContent).toExponential(1)
+               }
             firstNum = -firstNum
         }
     }
@@ -115,7 +121,7 @@ buttons.forEach(button => button.addEventListener('click' , (e)=>{
         d = firstNum
     }
     else if(y == 'x' || y == '/' || y == '+' || y =='-' ){
-        if (!firstNum){
+        if (firstNum == undefined){
             div.classList.remove('transparent')
            sign = operators(e)
             return
@@ -151,8 +157,8 @@ const clear = document.querySelector('.clear')
 clear.addEventListener('click' , (e)=>{
     screen.textContent = ''
     text = ''
-    firstNum = 0
+    firstNum = undefined
     secondNum = 0
     sign = ''
-    d = undefined
+    carry = undefined
 })
